@@ -19,7 +19,7 @@ app.get('/login', function(req, res) {
 })
 
 app.get('/callback', function(req, res) {
-  console.log(req)
+  console.log("This is the code - " + req.query.code)
   let code = req.query.code || null
   let authOptions = {
     url: 'https://api.stocktwits.com/api/2/oauth/token',
