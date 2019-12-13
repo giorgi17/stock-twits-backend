@@ -23,13 +23,15 @@ app.get('/callback', function(req, res) {
   let authOptions = {
     url: 'https://api.stocktwits.com/api/2/oauth/token',
     form: {
+      client_id: process.env.STOCKTWITS_CLIENT_ID,
+      client_secret: process.env.STOCKTWITS_CLIENT_SECRET,
       code: code,
       redirect_uri,
-      grant_type: 'authorization_code'
+      // grant_type: 'authorization_code'
     },
-    headers: {
-      'Authorization': 'Basic ' + process.env.STOCKTWITS_CLIENT_ID + ':' + process.env.STOCKTWITS_CLIENT_SECRET
-    },
+    // headers: {
+    //   'Authorization': 'Basic ' + process.env.STOCKTWITS_CLIENT_ID + ':' + process.env.STOCKTWITS_CLIENT_SECRET
+    // },
     json: true
   }
   request.post(authOptions, function(error, response, body) {
