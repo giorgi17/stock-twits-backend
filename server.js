@@ -9,11 +9,11 @@ let redirect_uri =
   'http://localhost:8888/callback'
 
 app.get('/login', function(req, res) {
-  res.redirect('https://accounts.spotify.com/authorize?' +
+  res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
     querystring.stringify({
       response_type: 'code',
-      client_id: process.env.SPOTIFY_CLIENT_ID,
-      scope: 'user-read-private user-read-email',
+      client_id: process.env.STOCKTWITS_CLIENT_ID,
+      scope: 'read',
       redirect_uri
     }))
 })
@@ -21,7 +21,7 @@ app.get('/login', function(req, res) {
 app.get('/callback', function(req, res) {
   let code = req.query.code || null
   let authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
+    url: 'https://api.stocktwits.com/api/2/oauth/token',
     form: {
       code: code,
       redirect_uri,
@@ -29,7 +29,7 @@ app.get('/callback', function(req, res) {
     },
     headers: {
       'Authorization': 'Basic ' + (new Buffer(
-        process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET
+        process.env.STOCKTWITS_CLIENT_ID + ':' + process.env.STOCKTWITS_CLIENT_SECRET
       ).toString('base64'))
     },
     json: true
