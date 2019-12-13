@@ -33,10 +33,10 @@ app.get('/callback', function(req, res) {
     json: true
   }
   request.post(authOptions, function(error, response, body) {
-    var access_token = body.access_token;
-    let uri = process.env.FRONTEND_URI || 'http://localhost:3000';
-    console.log(access_token);
-    // res.redirect(uri + '?access_token=' + access_token)
+    var access_token = body.access_token
+    let uri = process.env.FRONTEND_URI || 'http://localhost:3000'
+    console.log(access_token)
+    res.redirect(uri + '?access_token=' + access_token)
   })
 })
 
