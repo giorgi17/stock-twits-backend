@@ -27,8 +27,8 @@ app.get('/callback', function(req, res) {
       client_id: process.env.STOCKTWITS_CLIENT_ID,
       client_secret: process.env.STOCKTWITS_CLIENT_SECRET,
       code: code,
-      redirect_uri
-      // grant_type: 'authorization_code'
+      redirect_uri,
+      grant_type: 'authorization_code'
     },
     // headers: {
     //   'Authorization': 'Basic ' + process.env.STOCKTWITS_CLIENT_ID + ':' + process.env.STOCKTWITS_CLIENT_SECRET
