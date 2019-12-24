@@ -13,6 +13,14 @@ const validateStocktwitsInput = require("../../validation/stocktwits");
 // Load User model
 const User = require("../../models/User");
 
+// Set "Access-Control-Allow-Origin" to give frotnend access to backend
+router.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://stock-twits-app.herokuapp.com/');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // @route POST api/users/stocktwits-login
 // @desc Add new symbol for user
 // @access Public
