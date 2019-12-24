@@ -18,6 +18,10 @@ router.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'https://stock-twits-app.herokuapp.com');
   // res.setHeader('Access-Control-Allow-Origin', '*');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
   next();
 
     // // Request methods you wish to allow
