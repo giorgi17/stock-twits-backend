@@ -13,18 +13,6 @@ const users = require("./routes/api/users");
 
 let app = express()
 
-// Set "Access-Control-Allow-Origin" to give frotnend access to backend
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://stock-twits-app.herokuapp.com');
-  // res.setHeader('Access-Control-Allow-Origin', '*');
-  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  next();
-});
-
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
@@ -51,12 +39,25 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);  
+// TEST
+const router = app.Router();
+// Set "Access-Control-Allow-Origin" to give frotnend access to backend
+router.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://stock-twits-app.herokuapp.com');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
 
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  next();
+});
+// END OF TEST
 let redirect_uri = 
   process.env.REDIRECT_URI || 
   'http://localhost:8888/callback'
 
-app.get('/stocktwits-login', function(req, res) {
+router.get('/stocktwits-login', function(req, res) {
   res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -66,7 +67,7 @@ app.get('/stocktwits-login', function(req, res) {
     }))
 })
 
-app.get('/callback', function(req, res) {
+router.get('/callback', function(req, res) {
   console.log("This is the code - " + req.query.code)
   let code = req.query.code || null
   let authOptions = {
