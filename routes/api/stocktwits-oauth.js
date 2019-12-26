@@ -42,6 +42,7 @@ router.use(function (req, res, next) {
   'http://localhost:8888/callback'
 
 router.get('/stocktwits-login', function(req, res) {
+  res.setHeader('Origin', 'https://stock-twits-backend.herokuapp.com');
   res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
     querystring.stringify({
       response_type: 'code',
