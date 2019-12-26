@@ -42,7 +42,7 @@ router.use(function (req, res, next) {
 // @route POST api/users/get-twits-data
 // @desc Add new symbol for user
 // @access Public
-router.post("/get-twits-data", async (req, res) => {
+router.post("/get-twits-data", (req, res) => {
   // Send request to stocktwits api to get twits for certain symbol
 
   const api_url = "https://api.stocktwits.com/api/2/streams/symbol/" + req.body.symbol.toUpperCase() + ".json";
