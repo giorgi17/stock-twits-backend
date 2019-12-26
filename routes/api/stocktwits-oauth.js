@@ -43,7 +43,7 @@ router.use(function (req, res, next) {
 
 router.get('/stocktwits-login', function(req, res) {
   // res.setHeader('Access-Control-Allow-Origin', 'https://stock-twits-app.herokuapp.com');
-  req.headers['origin'] = 'https://stock-twits-app.herokuapp.com';
+  req.headers['origin'] = 'https://stock-twits-backend.herokuapp.com/';
   console.log(req);
   res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
     querystring.stringify({
