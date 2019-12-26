@@ -67,7 +67,7 @@ router.get('/stocktwits-login', function(req, res) {
     })
     .catch(function (err) {
         // API call failed...
-        console.log(err.message);
+        console.log(err);
     });
   //
 
