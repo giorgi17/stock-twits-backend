@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const Mongoose = require('mongoose')
+const axios = require('axios');
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -36,6 +37,26 @@ router.use(function (req, res, next) {
 
     // // Pass to next layer of middleware
     // next();
+});
+
+// @route POST api/users/get-twits-data
+// @desc Add new symbol for user
+// @access Public
+router.post("/get-twits-data", async (req, res) => {
+  // Send request to stocktwits api to get twits for certain symbol
+
+  const api_url = "https://api.stocktwits.com/api/2/streams/symbol/" + req.body.symbol.toUpperCase() + ".json";
+
+  axios
+    .get(api_url)
+    .then(axios_response => {
+      console.log(axios_response.data.symbol + " EEET");
+      res.status(201).json(axios_response.data);
+    }) 
+      .catch(err => {
+        res.status(400).json({errors: err.message});
+      }
+      );
 });
 
 // @route POST api/users/stocktwits-login
