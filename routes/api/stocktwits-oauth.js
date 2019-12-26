@@ -43,15 +43,40 @@ router.use(function (req, res, next) {
 
 router.get('/stocktwits-login', function(req, res) {
   // res.setHeader('Access-Control-Allow-Origin', 'https://stock-twits-app.herokuapp.com');
-  req.headers['origin'] = 'https://stock-twits-backend.herokuapp.com/';
-  console.log(req);
-  res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
-    querystring.stringify({
+  // req.headers['origin'] = 'https://stock-twits-backend.herokuapp.com/';
+  // Making options ready for redirect to stocktwits 
+  // request.get()
+  var options = {
+    uri: 'https://api.stocktwits.com/api/2/oauth/authorize',
+    qs: {
       response_type: 'code',
       client_id: process.env.STOCKTWITS_CLIENT_ID,
       scope: 'read',
-      redirect_uri
-    }))
+      redirect_uri // -> uri + '?access_token=xxxxx%20xxxxx'
+    },
+    // headers: {
+    //     'User-Agent': 'Request-Promise'
+    // },
+    json: true // Automatically parses the JSON string in the response
+  };
+
+  request(options)
+    .then(function (repos) {
+        console.log('User has %d repos', repos.length);
+    })
+    .catch(function (err) {
+        // API call failed...
+    });
+  //
+
+  // console.log(req);
+  // res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
+  //   querystring.stringify({
+  //     response_type: 'code',
+  //     client_id: process.env.STOCKTWITS_CLIENT_ID,
+  //     scope: 'read',
+  //     redirect_uri
+  //   }))
 })
 
 router.get('/callback', function(req, res) {
