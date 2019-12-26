@@ -13,6 +13,18 @@ const users = require("./routes/api/users");
 
 let app = express()
 
+// Set "Access-Control-Allow-Origin" to give frotnend access to backend
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://stock-twits-app.herokuapp.com');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  next();
+});
+
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
