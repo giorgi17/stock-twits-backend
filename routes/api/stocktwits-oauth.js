@@ -73,7 +73,7 @@ router.get('/stocktwits-login', function(req, res) {
   //
     */
 
-  console.log(req);
+  // console.log(req);
   res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
     querystring.stringify({
       response_type: 'code',
