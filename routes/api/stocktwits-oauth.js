@@ -134,3 +134,5 @@ const stocktwitsSignIn = stocktwitsUserData => {
     return {errors: e.message};
   }
 };
+
+module.exports = router;
