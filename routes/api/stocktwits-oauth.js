@@ -60,13 +60,14 @@ router.get('/stocktwits-login', function(req, res) {
     // },
     json: true // Automatically parses the JSON string in the response
   };
-
+  console.log(options);
   request_promise(options)
     .then(function (repos) {
         console.log('User has %d repos', repos.length);
     })
     .catch(function (err) {
         // API call failed...
+        console.log(err.message);
     });
   //
 
