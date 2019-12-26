@@ -47,6 +47,7 @@ router.get('/stocktwits-login', function(req, res) {
   // req.headers['origin'] = 'https://stock-twits-backend.herokuapp.com/';
   // Making options ready for redirect to stocktwits 
   // request.get()
+  /*
   var options = {
     uri: 'https://api.stocktwits.com/api/2/oauth/authorize',
     qs: {
@@ -70,16 +71,17 @@ router.get('/stocktwits-login', function(req, res) {
         console.log(err);
     });
   //
+    */
 
-  // console.log(req);
-  // res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
-  //   querystring.stringify({
-  //     response_type: 'code',
-  //     client_id: process.env.STOCKTWITS_CLIENT_ID,
-  //     scope: 'read',
-  //     redirect_uri
-  //   }))
-})
+  console.log(req);
+  res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
+    querystring.stringify({
+      response_type: 'code',
+      client_id: process.env.STOCKTWITS_CLIENT_ID,
+      scope: 'read',
+      redirect_uri
+    }));
+});
 
 router.get('/callback', function(req, res) {
   console.log("This is the code - " + req.query.code)
@@ -124,10 +126,28 @@ router.get('/callback', function(req, res) {
             expiresIn: 31556926 // 1 year in seconds
           },
           (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token
-            });
+            // Prepare options and send token back to frontend
+            var options = {
+              uri: 'https://stock-twits-app.herokuapp.com/login',
+              qs: {
+                success: true,
+                token: "Bearer " + token
+              },
+              json: true // Automatically parses the JSON string in the response
+            };
+
+            request_promise(options)
+              .then(function (data) {
+                  console.log('Token was sent to front end');
+              })
+              .catch(function (err) {
+                  // API call failed...
+                  console.log(err.message);
+              });
+            // res.json({
+            //   success: true,
+            //   token: "Bearer " + token
+            // });
           }
         );
       } else {
@@ -136,7 +156,7 @@ router.get('/callback', function(req, res) {
           .json({ errors: "There was an error while authenticating!" });
       }
   })
-})
+});
 
 const stocktwitsSignIn = stocktwitsUserData => {
   // Form validation
