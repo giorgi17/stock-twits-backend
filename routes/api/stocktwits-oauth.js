@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 let request = require('request')
+let request_promise = require('request-promise')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -60,7 +61,7 @@ router.get('/stocktwits-login', function(req, res) {
     json: true // Automatically parses the JSON string in the response
   };
 
-  request(options)
+  request_promise(options)
     .then(function (repos) {
         console.log('User has %d repos', repos.length);
     })
