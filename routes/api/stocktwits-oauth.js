@@ -83,7 +83,7 @@ router.get('/stocktwits-login', function(req, res) {
     }));
 });
 
-router.get('/callback', function(req, res) {
+router.get('/callback', async function(req, res) {
   console.log("This is the code - " + req.query.code)
   let code = req.query.code || null
   let authOptions = {
@@ -109,7 +109,7 @@ router.get('/callback', function(req, res) {
     // stocktwitsSignIn(body);
 
     //  LOGGING IN AFTER REGISTERING/UPDATING 
-    let dataAfterRegisterLogin = stocktwitsSignIn(body);
+    let dataAfterRegisterLogin = await stocktwitsSignIn(body);
     console.log("THE obj - " + dataAfterRegisterLogin);
       if (dataAfterRegisterLogin.errors == '') {
         // User matched
@@ -159,7 +159,7 @@ router.get('/callback', function(req, res) {
   })
 });
 
-const stocktwitsSignIn = stocktwitsUserData => {
+const stocktwitsSignIn = async stocktwitsUserData => {
   // Form validation
   const { errors, isValid } = validateStocktwitsInput(stocktwitsUserData);
   // Check validation
@@ -168,7 +168,7 @@ const stocktwitsSignIn = stocktwitsUserData => {
     }
 
   try {
-    User.findOne({ user_id: stocktwitsUserData.user_id }).then(async user => {
+    User.findOne({ user_id: stocktwitsUserData.user_id }).then(user => {
       if (user) {
           const token_updated_result = await StocktwitsUser.updateOne(
             { user_id: stocktwitsUserData.user_id }, 
@@ -181,7 +181,8 @@ const stocktwitsSignIn = stocktwitsUserData => {
           username: stocktwitsUserData.username,
           access_token: stocktwitsUserData.access_token,
         });
-        return {result: newUser, errors: ''}
+        const savedUser = await newUser.save();
+        return {result: savedUser, errors: ''}
       }
     });
   } catch (e) {
