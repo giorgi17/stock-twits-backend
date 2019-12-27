@@ -7,10 +7,8 @@ const jwt = require("jsonwebtoken");
 
 const keys = require("../../config/keys");
 let querystring = require('querystring')
-const Mongoose = require('mongoose')
-const axios = require('axios');
 
-const StocktwitsUser = require("./models/StocktwitsUser");
+const StocktwitsUser = require("../../models/StocktwitsUser");
 
 // Load input validation
 const validateStocktwitsInput = require("../../validation/stocktwits");
