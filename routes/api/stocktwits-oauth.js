@@ -85,7 +85,7 @@ router.get('/stocktwits-login', function(req, res) {
 
 router.get('/callback', function(req, res) {
   console.log("This is the code - " + req.query.code)
-  let code = req.query.code || null
+  let code = req.query.code || null;
   let authOptions = {
     url: 'https://api.stocktwits.com/api/2/oauth/token',
     form: {
@@ -139,7 +139,7 @@ router.get('/callback', function(req, res) {
 
             request_promise(options)
               .then(function (data) {
-                  console.log('Token was sent to front end');
+                  console.log('Token was sent to front end - ' + data);
               })
               .catch(function (err) {
                   // API call failed...
