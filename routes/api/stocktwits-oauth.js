@@ -178,6 +178,8 @@ const stocktwitsSignIn = async stocktwitsUserData => {
           });
           const savedUser = await newUser.save();
           return {result: savedUser};
+        } else {
+          return {retult: "Found the record!", errors:''};
         }
     // User.findOne({ user_id: stocktwitsUserData.user_id }).then(async user => {
     //   if (user) {
