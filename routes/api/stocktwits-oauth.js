@@ -169,7 +169,7 @@ const stocktwitsSignIn = async stocktwitsUserData => {
     }
 
   try {
-    User.findOne({ user_id: stocktwitsUserData.user_id }).then(async user => {
+    User.findOne({ user_id: stocktwitsUserData.user_id }).then(user => {
       if (user) {
         //   const token_updated_result = await StocktwitsUser.updateOne(
         //     { user_id: stocktwitsUserData.user_id }, 
