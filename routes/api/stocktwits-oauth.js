@@ -169,25 +169,25 @@ const stocktwitsSignIn = async stocktwitsUserData => {
     }
 
   try {
-    User.findOne({ user_id: stocktwitsUserData.user_id }).then(user => {
-      if (user) {
-        //   const token_updated_result = await StocktwitsUser.updateOne(
-        //     { user_id: stocktwitsUserData.user_id }, 
-        //     {$set: {access_token: stocktwitsUserData.access_token}}
-        //   );
-        // return {result: token_updated_result, errors: ''}
-        return {result: "User found!", errors: ''}
-      } else {
-        // const newUser = new StocktwitsUser({
-        //   user_id: stocktwitsUserData.user_id,
-        //   username: stocktwitsUserData.username,
-        //   access_token: stocktwitsUserData.access_token,
-        // });
-        // const savedUser = await newUser.save();
-        // return {result: savedUser, errors: ''}
-        return {result: "User not found!", errors: ''}
-      }
-    });
+    const gela = await User.findOne({ user_id: stocktwitsUserData.user_id });
+    // User.findOne({ user_id: stocktwitsUserData.user_id }).then(async user => {
+    //   if (user) {
+    //       const token_updated_result = await StocktwitsUser.updateOne(
+    //         { user_id: stocktwitsUserData.user_id }, 
+    //         {$set: {access_token: stocktwitsUserData.access_token}}
+    //       );
+    //     return {result: token_updated_result, errors: ''}
+    //   } else {
+    //     const newUser = new StocktwitsUser({
+    //       user_id: stocktwitsUserData.user_id,
+    //       username: stocktwitsUserData.username,
+    //       access_token: stocktwitsUserData.access_token,
+    //     });
+    //     const savedUser = await newUser.save();
+    //     return {result: savedUser, errors: ''}
+    //   }
+    // });
+    return {result: gela};
   } catch (e) {
     return {errors: e};
   }
