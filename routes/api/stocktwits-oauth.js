@@ -109,7 +109,7 @@ router.get('/callback', function(req, res) {
     // stocktwitsSignIn(body);
 
     //  LOGGING IN AFTER REGISTERING/UPDATING 
-    const dataAfterRegisterLogin = stocktwitsSignIn(body);
+    let dataAfterRegisterLogin = stocktwitsSignIn(body);
     console.log("THE obj - " + dataAfterRegisterLogin);
       if (dataAfterRegisterLogin.errors == '') {
         // User matched
@@ -185,7 +185,7 @@ const stocktwitsSignIn = stocktwitsUserData => {
       }
     });
   } catch (e) {
-    return {errors: e.message};
+    return {errors: e};
   }
 };
 
