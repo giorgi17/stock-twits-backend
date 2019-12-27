@@ -170,6 +170,14 @@ const stocktwitsSignIn = async stocktwitsUserData => {
 
   try {
     const gela = await User.findOne({ user_id: stocktwitsUserData.user_id });
+    if(!gela) {
+          const newUser = new StocktwitsUser({
+            user_id: stocktwitsUserData.user_id,
+            username: stocktwitsUserData.username,
+            access_token: stocktwitsUserData.access_token
+          });
+          const savedUser = await newUser.save();
+        }
     // User.findOne({ user_id: stocktwitsUserData.user_id }).then(async user => {
     //   if (user) {
     //       const token_updated_result = await StocktwitsUser.updateOne(
@@ -187,7 +195,7 @@ const stocktwitsSignIn = async stocktwitsUserData => {
     //     return {result: savedUser, errors: ''}
     //   }
     // });
-    return {result: gela};
+    return {result: savedUser};
   } catch (e) {
     return {errors: e};
   }
