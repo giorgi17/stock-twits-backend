@@ -109,7 +109,7 @@ router.get('/callback', function(req, res) {
     // stocktwitsSignIn(body);
 
     //  LOGGING IN AFTER REGISTERING/UPDATING 
-    let dataAfterRegisterLogin = stocktwitsSignIn(body);
+    let dataAfterRegisterLogin = await stocktwitsSignIn(body);
     console.log("THE obj - " + dataAfterRegisterLogin);
       if (dataAfterRegisterLogin.errors != '') {
         // User matched
