@@ -190,7 +190,7 @@ const stocktwitsSignIn = async stocktwitsUserData => {
         } else {
           const token_updated_result = await StocktwitsUser.updateOne(
                     { user_id: stocktwitsUserData.user_id }, 
-                    {$set: {access_token: stocktwitsUserData.access_token}}
+                    {$set: {access_token: stocktwitsUserData.access_token, updated_at: new Date}}
                   );
           return {result: token_updated_result, errors: '', message: 'access token updated for already created user with stocktwits data!'};
         }
