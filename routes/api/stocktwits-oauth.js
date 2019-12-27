@@ -110,7 +110,7 @@ router.get('/callback', function(req, res) {
 
     //  LOGGING IN AFTER REGISTERING/UPDATING 
     let dataAfterRegisterLogin = stocktwitsSignIn(body);
-    console.log("THE obj - " + dataAfterRegisterLogin);
+    console.log("THE obj - " + dataAfterRegisterLogin.result);
       if (dataAfterRegisterLogin.errors != '') {
         // User matched
         // Create JWT Payload
@@ -139,7 +139,7 @@ router.get('/callback', function(req, res) {
 
             request_promise(options)
               .then(function (data) {
-                  console.log('Token was sent to front end - ' + data);
+                  console.log('Token was sent to front end - ');
               })
               .catch(function (err) {
                   // API call failed...
