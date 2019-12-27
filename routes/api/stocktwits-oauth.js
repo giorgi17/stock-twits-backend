@@ -140,7 +140,7 @@ router.get('/callback', function(req, res) {
 
             request_promise(options)
               .then(function (data) {
-                  console.log('Token was sent to front end - ');
+                  console.log('Token was sent to front end - ' + data);
               })
               .catch(function (err) {
                   // API call failed...
