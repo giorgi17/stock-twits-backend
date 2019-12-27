@@ -83,7 +83,7 @@ router.get('/stocktwits-login', function(req, res) {
     }));
 });
 
-router.get('/callback', async function(req, res) {
+router.get('/callback', function(req, res) {
   console.log("This is the code - " + req.query.code)
   let code = req.query.code || null
   let authOptions = {
@@ -100,7 +100,7 @@ router.get('/callback', async function(req, res) {
     // },
     json: true
   }
-  request.post(authOptions, function(error, response, body) {
+  request.post(authOptions, async function(error, response, body) {
     var access_token = body.access_token
     console.log(body);
     let uri = process.env.FRONTEND_URI || 'http://localhost:3000'
