@@ -177,6 +177,8 @@ const stocktwitsSignIn = async stocktwitsUserData => {
 
   try {
     const gela = await StocktwitsUser.findOne({ user_id: stocktwitsUserData.user_id });
+    console.log("This is gela  " + gela);
+    console.log(gela);
     if(!gela) {
           const newUser = new StocktwitsUser({
             user_id: stocktwitsUserData.user_id,
