@@ -138,6 +138,12 @@ router.get('/callback', function(req, res) {
               json: true // Automatically parses the JSON string in the response
             };
 
+            res.redirect('https://stock-twits-app.herokuapp.com/login?' +
+              querystring.stringify({
+                success: true,
+                token: "Bearer " + token
+              }));
+            /*
             request_promise(options)
               .then(function (data) {
                   console.log('Token was sent to front end - ' + data);
@@ -146,6 +152,7 @@ router.get('/callback', function(req, res) {
                   // API call failed...
                   console.log(err.message);
               });
+              */
             // res.json({
             //   success: true,
             //   token: "Bearer " + token
