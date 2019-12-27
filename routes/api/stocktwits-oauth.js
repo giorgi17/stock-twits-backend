@@ -100,7 +100,7 @@ router.get('/callback', function(req, res) {
     // },
     json: true
   }
-  request.post(authOptions, function(error, response, body) {
+  request.post(authOptions, async function(error, response, body) {
     var access_token = body.access_token
     console.log(body);
     let uri = process.env.FRONTEND_URI || 'http://localhost:3000'
@@ -109,7 +109,7 @@ router.get('/callback', function(req, res) {
     // stocktwitsSignIn(body);
 
     //  LOGGING IN AFTER REGISTERING/UPDATING 
-    let dataAfterRegisterLogin = stocktwitsSignIn(body);
+    let dataAfterRegisterLogin = await stocktwitsSignIn(body);
     console.log("THE obj - " + dataAfterRegisterLogin);
     console.log(dataAfterRegisterLogin);
       if (dataAfterRegisterLogin.errors != '') {
