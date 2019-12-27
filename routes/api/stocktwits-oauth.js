@@ -177,9 +177,13 @@ const stocktwitsSignIn = async stocktwitsUserData => {
             access_token: stocktwitsUserData.access_token
           });
           const savedUser = await newUser.save();
-          return {result: savedUser};
+          return {result: savedUser, errors: '', message: 'New user added with stocktwits data!'};
         } else {
-          return {retult: "Found the record!", errors:''};
+          const token_updated_result = await StocktwitsUser.updateOne(
+                    { user_id: stocktwitsUserData.user_id }, 
+                    {$set: {access_token: stocktwitsUserData.access_token}}
+                  );
+          return {result: token_updated_result, errors: '', message: 'access token updated for already created user with stocktwits data!'};
         }
     // User.findOne({ user_id: stocktwitsUserData.user_id }).then(async user => {
     //   if (user) {
