@@ -10,6 +10,8 @@ let querystring = require('querystring')
 const Mongoose = require('mongoose')
 const axios = require('axios');
 
+const StocktwitsUser = require("./models/StocktwitsUser");
+
 // Load input validation
 const validateStocktwitsInput = require("../../validation/stocktwits");
 
@@ -169,7 +171,7 @@ const stocktwitsSignIn = async stocktwitsUserData => {
     }
 
   try {
-    const gela = await User.findOne({ user_id: stocktwitsUserData.user_id });
+    const gela = await StocktwitsUser.findOne({ user_id: stocktwitsUserData.user_id });
     if(!gela) {
           const newUser = new StocktwitsUser({
             user_id: stocktwitsUserData.user_id,
