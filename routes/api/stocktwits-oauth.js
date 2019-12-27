@@ -177,6 +177,7 @@ const stocktwitsSignIn = async stocktwitsUserData => {
             access_token: stocktwitsUserData.access_token
           });
           const savedUser = await newUser.save();
+          return {result: savedUser};
         }
     // User.findOne({ user_id: stocktwitsUserData.user_id }).then(async user => {
     //   if (user) {
@@ -195,7 +196,7 @@ const stocktwitsSignIn = async stocktwitsUserData => {
     //     return {result: savedUser, errors: ''}
     //   }
     // });
-    return {result: savedUser};
+    // return {result: savedUser};
   } catch (e) {
     return {errors: e};
   }
