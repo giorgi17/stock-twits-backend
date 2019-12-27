@@ -111,7 +111,7 @@ router.get('/callback', function(req, res) {
     //  LOGGING IN AFTER REGISTERING/UPDATING 
     let dataAfterRegisterLogin = stocktwitsSignIn(body);
     console.log("THE obj - " + dataAfterRegisterLogin);
-      if (dataAfterRegisterLogin.errors == '') {
+      if (dataAfterRegisterLogin.errors != '') {
         // User matched
         // Create JWT Payload
         const payload = {
