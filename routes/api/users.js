@@ -13,6 +13,7 @@ const validateStocktwitsInput = require("../../validation/stocktwits");
 
 // Load User model
 const User = require("../../models/User");
+const StocktwitsUser = require("../../models/StocktwitsUser");
 
 // Set "Access-Control-Allow-Origin" to give frotnend access to backend
 router.use(function (req, res, next) {
@@ -120,13 +121,24 @@ router.post("/add-symbol", (req, res) => {
 // @route GET api/users/get-symbols
 // @desc get symbols list for user
 // @access Public
-router.post("/get-symbols", (req, res) => {
+router.post("/get-symbols", async (req, res) => {
   try {
-    const u = User.find( { _id: req.body.id } ).then( user => {
-      if (user) {
-        res.status(201).json(user);
-      }
-    });
+    let user;
+    if (req.body.stock){
+      user = await StocktwitsUser.find( { user_id: req.body.id } );
+    } else {
+      user = await User.find( { _id: req.body.id } );
+    }
+    
+    if (user) {
+      res.status(201).json(user);
+    }
+    
+    // const u = User.find( { _id: req.body.id } ).then( user => {
+    //   if (user) {
+    //     res.status(201).json(user);
+    //   }
+    // });
   } catch (e) {
     res.status(400).json({erros: e.message});
   }
