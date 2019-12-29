@@ -104,15 +104,28 @@ router.post("/add-symbol", (req, res) => {
     });
   }
   try {
-    const u = User.find( { _id: req.body.id } ).then(async user => {
-      if (user) {
-        const symbolResult = await User.updateOne(
-            { _id: req.body.id }, 
-            {$set: {symbols: [...user[0].symbols, req.body.symbol]}}
-        );
-        res.status(201).json(symbolResult);
-      }
-    }); 
+    if (req.body.stock){
+      const u = StocktwitsUser.find( { user_id: req.body.id } ).then(async user => {
+        if (user) {
+          const symbolResult = await StocktwitsUser.updateOne(
+              { user_id: req.body.id }, 
+              {$set: {symbols: [...user[0].symbols, req.body.symbol]}}
+          );
+          res.status(201).json(symbolResult);
+        }
+      }); 
+    } else {
+      const u = User.find( { _id: req.body.id } ).then(async user => {
+        if (user) {
+          const symbolResult = await User.updateOne(
+              { _id: req.body.id }, 
+              {$set: {symbols: [...user[0].symbols, req.body.symbol]}}
+          );
+          res.status(201).json(symbolResult);
+        }
+      }); 
+    }
+    
   } catch (e) {
     res.status(400).json({erros: e.message});
   }
