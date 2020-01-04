@@ -41,7 +41,7 @@ router.use(function (req, res, next) {
 });
 
 // @route POST api/users/get-twits-data
-// @desc Add new symbol for user
+// @desc Get twits from stocktwits api for certain symbol
 // @access Public
 router.post("/get-twits-data", (req, res) => {
   // Send request to stocktwits api to get twits for certain symbol
@@ -61,7 +61,7 @@ router.post("/get-twits-data", (req, res) => {
 });
 
 // @route POST api/users/stocktwits-login
-// @desc Add new symbol for user
+// @desc stockTwits authentication
 // @access Public
 router.post("/stocktwits-login", (req, res) => {
   // Form validation
@@ -93,6 +93,57 @@ router.post("/stocktwits-login", (req, res) => {
   }
 });
 
+// @route POST api/users/delete-symbol
+// @desc Delete symbol for user
+// @access Public
+router.post("/delete-symbol", (req, res) => {
+  // Validation
+  if (req.body.symbol.length == 0){
+    return res.status(400).json({
+      errors: "Input is empty!"
+    });
+  }
+  try {
+    if (req.body.stock){
+      const u = StocktwitsUser.find( { user_id: req.body.id } ).then(async user => {
+        if (user) {
+          const symbolCopy = [...req.body.symbols];
+          console.log("F - " + symbolCopy);
+          const index = symbolCopy.indexOf(req.body.symbol);
+          if (index > -1) {
+            symbolCopy.splice(index, 1);
+            console.log("This is index - " + index);
+          }
+          const symbolResult = await StocktwitsUser.updateOne(
+              { user_id: req.body.id }, 
+              {$set: {symbols: [...symbolCopy]}}
+          );
+          res.status(201).json(symbolResult);
+        }
+      }); 
+    } else {
+      const u = User.find( { _id: req.body.id } ).then(async user => {
+        if (user) {
+          const symbolCopy = [...user[0].symbols];
+          console.log("F - " + symbolCopy);
+          const index = symbolCopy.indexOf(req.body.symbol);
+          if (index > -1) {
+            symbolCopy.splice(index, 1);
+          }
+          const symbolResult = await User.updateOne(
+              { _id: req.body.id }, 
+              {$set: {symbols: [...symbolCopy]}}
+          );
+          res.status(201).json(symbolResult);
+        }
+      }); 
+    }
+    
+  } catch (e) {
+    res.status(400).json({erros: e.message});
+  }
+});
+
 // @route POST api/users/add-symbol
 // @desc Add new symbol for user
 // @access Public
@@ -109,7 +160,7 @@ router.post("/add-symbol", (req, res) => {
         if (user) {
           const symbolResult = await StocktwitsUser.updateOne(
               { user_id: req.body.id }, 
-              {$set: {symbols: [...user[0].symbols, req.body.symbol]}}
+              {$set: {symbols: [...user[0].symbols, req.body.symbol.toUpperCase()]}}
           );
           res.status(201).json(symbolResult);
         }
@@ -119,7 +170,7 @@ router.post("/add-symbol", (req, res) => {
         if (user) {
           const symbolResult = await User.updateOne(
               { _id: req.body.id }, 
-              {$set: {symbols: [...user[0].symbols, req.body.symbol]}}
+              {$set: {symbols: [...user[0].symbols, req.body.symbol.toUpperCase()]}}
           );
           res.status(201).json(symbolResult);
         }
