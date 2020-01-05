@@ -107,7 +107,7 @@ router.post("/delete-symbol", (req, res) => {
     if (req.body.stock){
       const u = StocktwitsUser.find( { user_id: req.body.id } ).then(async user => {
         if (user) {
-          const symbolCopy = [...req.body.symbols];
+          const symbolCopy = [...user[0].symbols];
           console.log("F - " + symbolCopy);
           const index = symbolCopy.indexOf(req.body.symbol);
           if (index > -1) {
