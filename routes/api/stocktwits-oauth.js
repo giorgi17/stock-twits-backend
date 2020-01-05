@@ -23,19 +23,6 @@ router.use(function (req, res, next) {
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   
     next();
-  
-      // // Request methods you wish to allow
-      // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  
-      // // Request headers you wish to allow
-      // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  
-      // // Set to true if you need the website to include cookies in the requests sent
-      // // to the API (e.g. in case you use sessions)
-      // res.setHeader('Access-Control-Allow-Credentials', true);
-  
-      // // Pass to next layer of middleware
-      // next();
   });
 
   let redirect_uri = 
@@ -47,31 +34,6 @@ router.get('/stocktwits-login', function(req, res) {
   // req.headers['origin'] = 'https://stock-twits-backend.herokuapp.com/';
   // Making options ready for redirect to stocktwits 
   // request.get()
-  /*
-  var options = {
-    uri: 'https://api.stocktwits.com/api/2/oauth/authorize',
-    qs: {
-      response_type: 'code',
-      client_id: process.env.STOCKTWITS_CLIENT_ID,
-      scope: 'read',
-      redirect_uri // -> uri + '?access_token=xxxxx%20xxxxx'
-    },
-    // headers: {
-    //     'User-Agent': 'Request-Promise'
-    // },
-    json: true // Automatically parses the JSON string in the response
-  };
-  console.log(options);
-  request_promise(options)
-    .then(function (repos) {
-        console.log('User has %d repos', repos.length);
-    })
-    .catch(function (err) {
-        // API call failed...
-        console.log(err);
-    });
-  //
-    */
 
   // console.log(req);
   res.redirect('https://api.stocktwits.com/api/2/oauth/authorize?' +
@@ -143,20 +105,6 @@ router.get('/callback', function(req, res) {
                 success: true,
                 token: "Bearer " + token
               }));
-            /*
-            request_promise(options)
-              .then(function (data) {
-                  console.log('Token was sent to front end - ' + data);
-              })
-              .catch(function (err) {
-                  // API call failed...
-                  console.log(err.message);
-              });
-              */
-            // res.json({
-            //   success: true,
-            //   token: "Bearer " + token
-            // });
           }
         );
       } else {
@@ -194,24 +142,6 @@ const stocktwitsSignIn = async stocktwitsUserData => {
                   );
           return {result: token_updated_result, errors: '', message: 'access token updated for already created user with stocktwits data!'};
         }
-    // User.findOne({ user_id: stocktwitsUserData.user_id }).then(async user => {
-    //   if (user) {
-    //       const token_updated_result = await StocktwitsUser.updateOne(
-    //         { user_id: stocktwitsUserData.user_id }, 
-    //         {$set: {access_token: stocktwitsUserData.access_token}}
-    //       );
-    //     return {result: token_updated_result, errors: ''}
-    //   } else {
-    //     const newUser = new StocktwitsUser({
-    //       user_id: stocktwitsUserData.user_id,
-    //       username: stocktwitsUserData.username,
-    //       access_token: stocktwitsUserData.access_token,
-    //     });
-    //     const savedUser = await newUser.save();
-    //     return {result: savedUser, errors: ''}
-    //   }
-    // });
-    // return {result: savedUser};
   } catch (e) {
     return {errors: e};
   }
